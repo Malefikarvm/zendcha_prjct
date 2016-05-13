@@ -7,6 +7,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initDocType()
     {
+        /**
+         * Objetos de la base de datos
+         */
         $db = Zend_Db::factory('Pdo_Mysql', array(
             'host' => 'localhost',
             'username' => 'root',
@@ -17,6 +20,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $select = $db->select();
         Zend_Registry::set('db', $db);
         Zend_Registry::set('select', $select);
+
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
