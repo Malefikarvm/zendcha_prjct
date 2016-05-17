@@ -11,6 +11,7 @@ class Model_User extends Model_UserMapper
 
     private $id;
     private $idUser;
+    private $password;
     private $name;
     private $lastName;
     private $idStatus;
@@ -22,12 +23,15 @@ class Model_User extends Model_UserMapper
     public function __construct($users = null)
     {
         parent::__construct('user');
+        
         if($users){
             $this->id = $users->id;
             $this->idUser = $users->idUser;
+            $this->password = $users->password;
             $this->name = $users->name;
             $this->lastName = $users->lastName;
             $this->idStatus = $users->idStatus;
+            parent::registry(json_decode(json_encode($users), true));
         }
     }
 
@@ -64,6 +68,14 @@ class Model_User extends Model_UserMapper
     }
 
     /**
+     * @return mixed
+     */
+    public function getIdStatus()
+    {
+        return $this->idStatus;
+    }
+
+    /**
      * @param mixed $id
      */
     public function setId($id)
@@ -95,10 +107,16 @@ class Model_User extends Model_UserMapper
         $this->lastName = $lastName;
     }
 
-
-    public function fill() 
+    /**
+     * @param mixed $idStatus
+     */
+    public function setIdStatus($idStatus)
     {
-        return parent::all();
+        $this->idStatus = $idStatus;
     }
-
+    
+    public function getAll()
+    {
+        return parent::findAll();
+    }
 }

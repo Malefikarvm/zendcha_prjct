@@ -8,7 +8,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initDocType()
     {
         /**
-         * Objetos de la base de datos
+         * Carga la base de datos
          */
         $db = Zend_Db::factory('Pdo_Mysql', array(
             'host' => 'localhost',
@@ -17,10 +17,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'dbname' => 'test',
             'charset' => 'utf8'
         ));
-        $select = $db->select();
         Zend_Registry::set('db', $db);
-        Zend_Registry::set('select', $select);
 
+        /**
+         * Carga la vista del bootstrap
+         */
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
@@ -36,6 +37,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
 
         $loader->addResourceType('model', 'models/', 'Model');
+        $loader->addResourceType('component', 'components/', 'Component');
         return $loader;
     }
 
