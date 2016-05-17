@@ -10,6 +10,9 @@ class IndexController extends Zend_Controller_Action
 
     public function init()
     {
+        $logedIn = Zend_Registry::get('logedIn');
+        if (!$logedIn)
+            $this->redirect('/user');
         $this->crypto = new Component_Cryptos("SantiagoPosada");
         $users = new stdClass();
         $users->id = '1';

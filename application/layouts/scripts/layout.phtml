@@ -4,10 +4,17 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>crud</title>
+  <style>
+    .signinpanel {
+      margin: 10% auto 0 auto;
+    }
+    .custom {
+      width: 330px !important;
+    }
+  </style>
   <?php echo $this->headLink()->appendStylesheet('/assets/bootstrap/css/bootstrap.min.css') ?>
   <?php echo $this->headLink()->appendStylesheet('/app/ext-4/resources/css/ext-all.css') ?>
-  <?php echo $this->headScript()->appendFile('/app/ext-all.js', 'text/javascript')
-                                ->appendFile('/app/app.js', 'text/javascript') ?>
+  
 </head>
 <body>
   <div class="container" >

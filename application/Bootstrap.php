@@ -25,6 +25,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
+
+        /**
+         * Variables de sesión
+         */
+        Zend_Registry::set('logedIn', false);
     }
 
     protected function _initAutoload()
@@ -38,6 +43,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $loader->addResourceType('model', 'models/', 'Model');
         $loader->addResourceType('component', 'components/', 'Component');
+        $loader->addResourceType('form', 'forms/', 'Form');
         return $loader;
     }
 

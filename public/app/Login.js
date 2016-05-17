@@ -1,9 +1,9 @@
 /**
- * Created by jsant on 16/05/2016.
+ * Created by jsant on 17/05/2016.
  */
 Ext.application({
     //requieres : ['Ext.container.Viewport'],
-    name : 'Crud',
+    name : 'login',
     appFolder : 'app',
 
     controllers : [
@@ -19,11 +19,12 @@ Ext.application({
     ],
 
     launch: function () {
+        
         //Ext.create('Crud.view.user.form').show();
         /*Ext.create('Ext.container.Viewport', {
-            items : {
-                html : 'Hola mundo!'
-            }
-        });*/
+         items : {
+         html : 'Hola mundo!'
+         }
+         });*/
     }
 });
