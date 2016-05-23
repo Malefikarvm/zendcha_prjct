@@ -67,7 +67,4 @@ class Component_Cryptos
             return $p * $n;
         }
     }
-    
-    /*$value = unpack('H*', "!");
-    echo base_convert($value[1], 16, 2);*/
 }

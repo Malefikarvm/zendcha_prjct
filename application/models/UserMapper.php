@@ -10,13 +10,15 @@ class Model_UserMapper
 
     private $tableName= 'user';
     private $db;
+    private $join;
 
     /**
      * Mdel_UserMapper constructor.
      */
-    protected function __construct($tbl)
+    public function __construct($tbl, $join = array())
     {
         $this->tableName = $tbl;
+        $this->join = $join;
         $this->db = Zend_Registry::get('db');
     }
 
@@ -24,7 +26,7 @@ class Model_UserMapper
      * Obtiene todos los registros de la tabla
      * @return mixed
      */
-    protected function findAll()
+    public function findAll()
     {
         $select = $this->db->select()
                             ->from($this->tableName);
@@ -35,7 +37,7 @@ class Model_UserMapper
      * Inserta o actualiza un conjunto de datos  en la tabla
      * @param $data
      */
-    protected function registry($data)
+    public function registry($data)
     {
         if ($this->idExists($data['id']) && $this->idUserExists($data['idUser'])) {
             unset($data['id']);
@@ -50,7 +52,7 @@ class Model_UserMapper
      * Inserta en la tabla
      * @param $insert
      */
-    protected function insert($insert)
+    public function insert($insert)
     {
         $this->db->insert($this->tableName, $insert);
     }
@@ -60,7 +62,7 @@ class Model_UserMapper
      * @param $update
      * @param null $where
      */
-    protected function update($update, $where = null)
+    public function update($update, $where = null)
     {
         $this->db->update($this->tableName, $update, $where);
     }
@@ -90,6 +92,31 @@ class Model_UserMapper
             ->from($this->tableName,
                 array('id'))
             ->where('idUser = ?', $idUser);
+        return count($this->db->fetchAll($select)) === 0 ? false : true;
+    }
+
+    public function isActive($user, $pass)
+    {
+        $select = $this->db->select()
+            ->from(array($this->tableName[0] => $this->tableName),
+                    array())
+            ->joinInner(array($this->join[0][0] => $this->join[0]),
+                        $this->join[0][0].'.id = '.$this->tableName[0].'.idStatus',
+                        array('status'))
+            ->where('idUser = ?', $user)
+            ->where('password = ?', $pass);
+        $arr = $this->db->fetchRow($select);
+        return $arr['status'] === 'activo' ? true : false;
+    }
+
+    public function isValidUserPass($user, $pass)
+    {
+        $select = $this->db->select()
+            ->from($this->tableName,
+                array('idUser'))
+            ->where('idUser = ?', $user)
+            ->where('password = ?', $pass);
+
         return count($this->db->fetchAll($select)) === 0 ? false : true;
     }
 }

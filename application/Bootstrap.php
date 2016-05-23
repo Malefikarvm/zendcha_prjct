@@ -20,16 +20,22 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('db', $db);
 
         /**
+         * Variables de sesión
+         */
+        /*$logedIn = new stdClass();
+        $logedIn->user = false;
+        Zend_Registry::set('logedIn', $logedIn);*/
+        Zend_Registry::set('session', new Zend_Session_Namespace("login"));
+
+        /**
          * Carga la vista del bootstrap
          */
         $this->bootstrap('view');
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
 
-        /**
-         * Variables de sesión
-         */
-        Zend_Registry::set('logedIn', false);
+
+        
     }
 
     protected function _initAutoload()

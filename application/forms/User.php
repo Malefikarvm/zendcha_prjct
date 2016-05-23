@@ -14,26 +14,22 @@ class Form_User extends Zend_Form
     /**
      * From_User constructor.
      */
-    public function __construct($usr, $pss)
+    public function __construct()
     {
-        $user = new Zend_Form_Element_Text('user');
-        $password = new Zend_Form_Element_Password('password');
-        $user->setValue($usr);
-        $password->setValue($pss);
-        parent::addElements(compact('user', 'password'));
+        $this->user = new Zend_Form_Element_Text('user');
+        $this->password = new Zend_Form_Element_Password('password');
+        //parent::addElements(compact('user', 'password'));
     }
 
-    public function init()
+    public function validate($usr, $pss)
     {
-        $this->user->addValidators(array(
-                        'alnum'
-                    ))
-                    ->setRequired();
+        $this->user->addValidator('Alnum', false, array('allowWhiteSpace' => false))
+                    ->setRequired(true);
 
-        $this->password->addValidators(array(
-                            'alnum'
-                        ))
-                        ->setRequired();
+        $this->password->addValidator('alnum', false, array('allowWhiteSpace' => false))
+                        ->setRequired(true);
+
+        return $this->user->isValid($usr) && $this->password->isValid($pss);
     }
 
 

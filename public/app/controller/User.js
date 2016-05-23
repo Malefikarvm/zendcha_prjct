@@ -14,7 +14,7 @@ Ext.define('login.controller.User', {
              * @param nums
              * @returns {boolean}
              */
-            notIn : function (keyCode, nums) {
+            keyNotIn : function (keyCode, nums) {
                 var valid = false;
                 for (var i = 0; i < nums.length; i++) {
                     if (keyCode != nums[i]){
@@ -36,7 +36,7 @@ Ext.define('login.controller.User', {
             var length = val.length;
             var key = e.keyCode;
             var keyNums = [8, 46, 37, 38, 39, 40];
-            if (length >= 16 && functions.notIn(key, keyNums)) {
+            if (length >= 16 && functions.keyNotIn(key, keyNums)) {
                 e.stopEvent();
             }
         });
@@ -56,7 +56,16 @@ Ext.define('login.controller.User', {
                 },
                 beforerequest : function () {},
                 success: function (response) {
-                    Ext.Msg.alert('Login', response.responseText);
+                    resp = response.responseText;
+                    if (resp == 'true') {
+                        var params = {
+                            user: usr
+                        };
+                        window.open('/index', '_self');
+                        params.submit();
+                    } else {
+                        Ext.Msg.alert('Login', resp);
+                    }
                 }
             });
         });

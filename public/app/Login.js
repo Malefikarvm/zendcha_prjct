@@ -13,11 +13,7 @@ Ext.application({
     models : [
         'User'
     ],
-
-    views : [
-        'user.form'
-    ],
-
+    
     launch: function () {
         
         //Ext.create('Crud.view.user.form').show();

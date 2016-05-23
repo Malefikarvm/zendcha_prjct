@@ -3,26 +3,26 @@
  */
 Ext.application({
     //requieres : ['Ext.container.Viewport'],
-    name : 'Crud',
+    name : 'App',
     appFolder : 'app',
 
     controllers : [
-        'User'
-    ],
-
-    models : [
-        'User'
-    ],
-
-    views : [
-        'user.form'
+        'Company'
     ],
 
     launch: function () {
-        //Ext.create('Crud.view.user.form').show();
+        Ext.create('App.view.company.Form', {
+            renderTo: 'form'
+        });
+        Ext.create('App.view.company.List', {
+            renderTo: 'list'
+        });
         /*Ext.create('Ext.container.Viewport', {
+            layout: 'fit',
             items : {
-                html : 'Hola mundo!'
+                //xtype: 'box',
+                //html: 'hola mundo'
+                xtype: 'companyform'
             }
         });*/
     }

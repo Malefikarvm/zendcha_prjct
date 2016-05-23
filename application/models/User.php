@@ -6,7 +6,7 @@
  * Date: 13/05/2016
  * Time: 9:23 AM
  */
-class Model_User extends Model_UserMapper
+class Model_User
 {
 
     private $id;
@@ -15,14 +15,16 @@ class Model_User extends Model_UserMapper
     private $name;
     private $lastName;
     private $idStatus;
-    
+    private $userMapper;
+
     /**
      * User constructor.
      * @param $users
      */
     public function __construct($users = null)
     {
-        parent::__construct('user');
+        $joins = array('status');
+        $this->userMapper = new Model_UserMapper('user', $joins);
         
         if($users){
             $this->id = $users->id;
@@ -31,7 +33,7 @@ class Model_User extends Model_UserMapper
             $this->name = $users->name;
             $this->lastName = $users->lastName;
             $this->idStatus = $users->idStatus;
-            parent::registry(json_decode(json_encode($users), true));
+            $this->userMapper->registry((array) $users, true);
         }
     }
 
@@ -76,6 +78,14 @@ class Model_User extends Model_UserMapper
     }
 
     /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * @param mixed $id
      */
     public function setId($id)
@@ -114,9 +124,18 @@ class Model_User extends Model_UserMapper
     {
         $this->idStatus = $idStatus;
     }
-    
-    public function getAll()
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
     {
-        return parent::findAll();
+        $this->password = $password;
+    }
+    
+    public function validateUserLogin()
+    {
+        return ($this->userMapper->isActive($this->idUser, $this->password) && $this->userMapper->isValidUserPass($this->idUser, $this->password)) ?
+            'true' : 'Usuario no válido';
     }
 }
